@@ -40,5 +40,7 @@ public class Concert {
     @MapKeyColumn(name = "seat_type")
     @Column(name = "price")
     private Map<String, Integer> price;
+
+    private boolean approved = false;
 }
 
