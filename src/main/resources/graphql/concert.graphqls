@@ -1,0 +1,63 @@
+type Query {
+  getConcerts: [Concert!]!
+  getConcertById(id: ID!): Concert
+}
+
+type Mutation {
+  createConcert(input: ConcertInput!): Concert
+  approveConcert(id: ID!): Concert
+}
+
+# 출력용(조회, 응답)
+type Concert {
+  id: ID!
+  title: String!
+  place: String!
+  locate: Locate!
+  address: String!
+  startTime: String!
+  ticketTime: String!
+  ticketSite: String!
+  ticketLink: String!
+  poster: String!
+  genre: Genre!
+  artist: [String!]!
+  price: [PriceEntry!]!  #graphql에는 map구조가 없어서 따로 만들어줘야함
+  approved: Boolean!
+}
+
+type PriceEntry {
+  seatType: String!
+  price: Int!
+}
+
+# 입력용, id,aprroved 값은 제외
+input ConcertInput {
+  title: String!
+  place: String!
+  locate: Locate!
+  address: String!
+  startTime: String!
+  ticketTime: String!
+  ticketSite: String!
+  ticketLink: String!
+  poster: String!
+  genre: Genre!
+  artist: [String!]!
+  price: [PriceInput!]!
+}
+
+input PriceInput {
+  seatType: String!
+  price: Int!
+}
+
+enum Locate {
+  SEOUL, BUSAN, INCHEON, ETC
+}
+
+enum Genre {
+  CONCERT, FESTIVAL, BAND, GENVA, ECT
+}
+
+
