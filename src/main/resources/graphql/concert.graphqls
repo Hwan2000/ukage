@@ -1,3 +1,5 @@
+scalar DateTime
+
 type Query {
   getConcerts: [Concert!]!
   getConcertById(id: ID!): Concert
@@ -15,14 +17,14 @@ type Concert {
   place: String!
   locate: Locate!
   address: String!
-  startTime: String!
-  ticketTime: String!
+  startTime: DateTime!
+  ticketTime: DateTime!
   ticketSite: String!
   ticketLink: String!
   poster: String!
   genre: Genre!
   artist: [String!]!
-  price: [PriceEntry!]!  #graphql에는 map구조가 없어서 따로 만들어줘야함
+  price: [PriceEntry!]!
   approved: Boolean!
 }
 
@@ -37,8 +39,8 @@ input ConcertInput {
   place: String!
   locate: Locate!
   address: String!
-  startTime: String!
-  ticketTime: String!
+  startTime: DateTime!
+  ticketTime: DateTime!
   ticketSite: String!
   ticketLink: String!
   poster: String!

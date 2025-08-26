@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.time.OffsetDateTime;
+import java.util.*;
 
 @Entity
 @Getter
@@ -33,10 +32,10 @@ public class Concert {
     private String address;
 
     @Column(nullable = false)
-    private LocalDateTime startTime;
+    private OffsetDateTime startTime;
 
     @Column(nullable = false)
-    private LocalDateTime ticketTime;
+    private OffsetDateTime ticketTime;
 
     private String ticketSite; // 나중에 추가해도 됨
     private String ticketLink;
@@ -49,13 +48,17 @@ public class Concert {
     @ElementCollection
     @CollectionTable(name = "concert_artist", joinColumns = @JoinColumn(name = "concert_id"))
     @Column(name = "artist")
-    private List<String> artist;
+    @Builder.Default
+    private List<String> artist = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "concert_price", joinColumns = @JoinColumn(name = "concert_id"))
-    @MapKeyColumn(name = "seat_type")
-    @Column(name = "price")
-    private Map<String, Integer> price;
+    @CollectionTable(name = "concert_prices", joinColumns = @JoinColumn(name = "concert_id"))
+    @AttributeOverrides({
+            @AttributeOverride(name = "seatType", column = @Column(name = "seat_type")),
+            @AttributeOverride(name = "price",    column = @Column(name = "price"))
+    })
+    @Builder.Default
+    private List<PriceEntry> price = new ArrayList<>();
 
     @Builder.Default //false를 기본값으로 설정
     @Column(nullable = false)
