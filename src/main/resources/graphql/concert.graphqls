@@ -10,6 +10,17 @@ type Mutation {
   approveConcert(id: ID!): Concert
 }
 
+extend type Mutation {
+  addZzim(userId: ID!, concertId: ID!): UserResponse!
+  removeZzim(userId: ID!, concertId: ID!): UserResponse!
+}
+
+type UserResponse {
+  id: ID!
+  zzimConcertIds: [ID!]!
+}
+
+
 # 출력용(조회, 응답)
 type Concert {
   id: ID!
@@ -55,11 +66,11 @@ input PriceInput {
 }
 
 enum Locate {
-  SEOUL, BUSAN, INCHEON, ETC
+  SEOUL, GYEONGGI_INCHEON, DAEJEON_CHUNGCHEONG, GANGWON, BUSAN_DAEGU_ULSAN_GYEONGSANG, GWANGJU_JEOLLA, JEJU, ETC
 }
 
 enum Genre {
-  CONCERT, FESTIVAL, BAND, GENVA, ECT
+  CONCERT, FESTIVAL, BAND, GENVA, ETC
 }
 
 
